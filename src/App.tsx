@@ -1,35 +1,44 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+
+/**
+ * App Component
+ * -------------
+ * Author: Marissa Abao
+ *
+ * Description:
+ * This component serves as the root of the Tamagotchi application.
+ * At this early stage, it provides a clean and minimal starting point
+ * after removing the default Vite + React template.
+ *
+ * Purpose:
+ * - Display a simple title and introductory message.
+ * - Establish a foundational React component that will be expanded
+ *   as the Tamagotchi project grows.
+ *
+ * UI Structure:
+ * - <div> : Container that wraps the content.
+ * - <h1>  : Main application title (“Tamagotchi”).
+ * - <p>   : Short description introducing the virtual pet.
+ *
+ * Notes:
+ * - This component currently contains no logic, state, or interactivity.
+ * - Future development will add:
+ *     • Pet stats (hunger, happiness, energy)
+ *     • Buttons for interactions (Feed, Play, Sleep)
+ *     • A timed loop to simulate time passing
+ *     • Visual graphics for the pet
+ *
+ * Export:
+ * The `export default App;` statement allows this component
+ * to be imported and rendered inside `main.tsx`.
+ */
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div>
+      <h1>Tamagotchi</h1>
+      <p>Let’s start building your virtual pet! 🐣</p>
+    </div>
+  );
 }
 
-export default App
+export default App;
