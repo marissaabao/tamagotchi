@@ -1,23 +1,222 @@
 
 /**
- * Global Styles: body
- * -------------------
+ * Desktop-first App.css
+ * ---------------------
  * Author: Marissa Abao
- *
- * Description:
- * Defines the base styling for the entire application.
- * Sets a clean sans‑serif font and a comfortable padding
- * around the page to ensure readable and uncluttered layout.
- *
- * Purpose:
- * - Provide consistent typography across the app.
- * - Create spacing that prevents elements from touching the edges.
- *
- * Notes:
- * - Additional global styles (colors, resets, themes)
- *   will be added later as the UI system evolves.
+ * Goal: Desktop layout matches wireframe:
+ * - HUD panels float in top-left/top-right (40px offsets)
+ * - Pet centered in the middle
+ * - Action buttons centered near the bottom
  */
+
+/* ===== Minimal reset to guarantee centering ===== */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html, body, #root { height: 100%; }
+
 body {
+  margin: 0;                 /* remove browser default margin */
   font-family: sans-serif;
   padding: 20px;
+  background: var(--white);
+  color: var(--ink-900);
+}
+
+/* ========== Theme Tokens (Paradise-soft) ========== */
+:root {
+  /* Backgrounds (light, airy) */
+  --bg-0: #FCFDFF;
+  --bg-1: #F8FAFF;
+  --bg-2: #F3F7FE;
+  --panel: #EAF3FF;
+
+  /* Accents (soft, colorful, not neon) */
+  --blue-500:   #67A7FF;
+  --cyan-400:   #6FD9E8;
+  --purple-400: #B5A7FF;
+  --pink-400:   #FFA7C0;
+  --yellow-400: #FFE37A;
+  --green-400:  #8EDFA7;
+
+  /* Text & lines */
+  --ink-900: #1C2230;
+  --ink-600: #3C4961;
+  --ink-300: #BFD0EB;
+  --ink-200: #D9E3F3;
+
+  /* Whites (softened on purpose) */
+  --white: #F2F2F2;
+
+  /* Signals (tempered) */
+  --success: #39C27E;
+  --warning: #FFC857;
+  --danger:  #FF7A88;
+
+  /* Elevation */
+  --shadow-2: 0 8px 18px rgba(24, 40, 72, 0.12);
+  --shadow-3: 0 12px 28px rgba(24, 40, 72, 0.16);
+}
+
+/* =================================================
+ * DESKTOP LAYOUT (DEFAULT)
+ * ================================================= */
+
+/* Main game canvas */
+.game-container {
+  position: relative;
+  min-height: 100svh;
+
+  background: linear-gradient(
+    180deg,
+    var(--bg-0) 0%,
+    var(--bg-1) 45%,
+    var(--bg-2) 100%
+  );
+
+  /* Center the pet in the middle of the screen */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Breathing room for HUD and action bar */
+  padding: 120px 40px 160px;
+
+  overflow: hidden;
+  color: var(--ink-900);
+}
+
+/* Floating HUD Panels */
+.hud {
+  position: absolute;
+  top: 40px;                /* default top */
+  background: var(--panel);
+  border: 1.5px solid var(--ink-200);
+  border-radius: 14px;
+  padding: 14px 18px;
+  width: 180px;
+  box-shadow: var(--shadow-2);
+  font-size: 0.85rem;
+  color: var(--ink-900);
+  z-index: 3;
+}
+
+.hud h3 {
+  margin: 0 0 8px;
+  font-size: 0.82rem;
+  color: var(--ink-600);
+}
+
+/* Corner placement */
+.top-left  { left: 40px; }
+.top-right { right: 40px; }
+
+/* Center Pet Area */
+.pet-view {
+  width: 260px;
+  height: 260px;
+
+  background: var(--panel);
+  border: 2px solid var(--ink-200);
+  border-radius: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: var(--shadow-3);
+  position: relative;
+  z-index: 2;
+}
+
+/* Soft halo behind pet */
+.pet-view::before {
+  content: "";
+  position: absolute;
+  inset: -20px;
+  background: radial-gradient(
+    180px 120px at 50% 40%,
+    rgba(111, 217, 232, 0.22),
+    rgba(181, 167, 255, 0.18),
+    transparent 70%
+  );
+  z-index: 0;
+}
+
+.pet-placeholder {
+  font-size: 5rem;
+  animation: float 2.5s ease-in-out infinite;
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
+}
+
+/* Stat bars */
+.stat-bar {
+  width: 100%;
+  height: 12px;
+  background: #F0F4FB;
+  border: 1.5px solid var(--ink-200);
+  border-radius: 8px;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+.stat-bar span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--cyan-400), var(--blue-500));
+  transition: width 220ms ease;
+}
+
+/* Action Buttons (bottom centered) */
+.actions-panel {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  display: flex;
+  gap: 16px;
+
+  z-index: 4;
+}
+
+.action-btn {
+  padding: 12px 18px;
+  border: 2px solid #E6EEFB;
+  border-radius: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  color: var(--ink-900);
+  box-shadow: var(--shadow-2);
+  transition: transform 0.1s ease, filter 0.1s ease, box-shadow 0.1s ease;
+}
+
+/* Button colors */
+.feed  { background: var(--blue-500);  color: #0D2240; }
+.play  { background: var(--pink-400);  color: #3A0F1F; }
+.nap   { background: var(--cyan-400);  color: #08353C; }
+.clean { background: var(--purple-400); color: #231C40; }
+
+.action-btn:hover {
+  filter: brightness(1.04);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(24, 40, 72, 0.16);
+}
+
+.action-btn:focus-visible {
+  outline: 3px solid var(--yellow-400);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(255, 227, 122, 0.35), var(--shadow-2);
+}
+
+/* A11y: Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .pet-placeholder { animation: none; }
 }
